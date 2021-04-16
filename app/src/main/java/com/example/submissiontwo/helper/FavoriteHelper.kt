@@ -74,8 +74,12 @@ class FavoriteHelper(context: Context) {
             return database.delete(DATABASE_TABLE, "$USERNAME = '$username'", null)
         }
     fun checkID(username: String): Boolean {
-        val cursor = contentResolver.query(CONTENT_URI, null, null, null, null)
-        MappingHelper.mapCursorToArrayList(cursor)
+        val cursor = database.query(DATABASE_TABLE,
+                null, "$USERNAME = ?",
+                arrayOf(username),
+                null,
+                null,
+                null)
         var check = false
         if (cursor.moveToFirst()) {
             check = true

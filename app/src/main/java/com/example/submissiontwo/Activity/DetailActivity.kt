@@ -135,14 +135,14 @@ class DetailActivity : AppCompatActivity() {
         }
         isFavorite = true
        // if (favoriteHelper.checkID(username)) favoriteHelper.insert(values)
-        //contentResolver.insert(CONTENT_URI, values)
-        favoriteHelper.insert(values)
+        contentResolver.insert(CONTENT_URI, values)
+        //favoriteHelper.insert(values)
         Toast.makeText(this, getString(R.string.addfavorite), Toast.LENGTH_SHORT).show()
     }
 
     private fun deleteFavoriteUser() {
-        //contentResolver.delete(uriWithId, null, null)
-        if (favoriteHelper.checkID(username)) favoriteHelper.deleteById(username)
+        contentResolver.delete(uriWithId, null, null)
+        //if (favoriteHelper.checkID(username)) favoriteHelper.deleteById(username)
         Toast.makeText(this, getString(R.string.unfavorite), Toast.LENGTH_SHORT).show()
     }
 
