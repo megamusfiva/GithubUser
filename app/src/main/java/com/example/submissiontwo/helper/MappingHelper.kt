@@ -1,37 +1,37 @@
 package com.example.submissiontwo.helper
 
 import android.database.Cursor
-import android.provider.BaseColumns
-import com.example.submissiontwo.Favorite
 import com.example.submissiontwo.Model.DatabaseContract
-import com.example.submissiontwo.Model.DatabaseContract.FavoriteColumns.Companion.AVATAR
-import com.example.submissiontwo.Model.DatabaseContract.FavoriteColumns.Companion.COMPANY
-import com.example.submissiontwo.Model.DatabaseContract.FavoriteColumns.Companion.FAVORITE
-import com.example.submissiontwo.Model.DatabaseContract.FavoriteColumns.Companion.NAME
-import com.example.submissiontwo.Model.DatabaseContract.FavoriteColumns.Companion.USERNAME
+import com.example.submissiontwo.Model.User
 import java.util.ArrayList
 
 object MappingHelper {
 
-    fun mapCursorToArrayListFav(favCursor: Cursor?): ArrayList<Favorite> {
-        val favoriteList = ArrayList<Favorite>()
+    fun mapCursorToArrayListFav(favCursor: Cursor?): ArrayList<User> {
+        val favoriteList = ArrayList<User>()
 
         favCursor?.apply {
             while (moveToNext()) {
-                val id = getInt(getColumnIndexOrThrow(BaseColumns._ID))
-                val username = getString(getColumnIndexOrThrow(USERNAME))
-                val name = getString(getColumnIndexOrThrow(NAME))
-                val avatar = getString(getColumnIndexOrThrow(AVATAR))
-                val company = getString(getColumnIndexOrThrow(COMPANY))
-                val favorite = getString(getColumnIndexOrThrow(FAVORITE))
+                val avatar = getString(getColumnIndexOrThrow(DatabaseContract.FavoriteColumns.AVATAR))
+                val username = getString(getColumnIndexOrThrow(DatabaseContract.FavoriteColumns.USERNAME))
+                val name = getString(getColumnIndexOrThrow(DatabaseContract.FavoriteColumns.NAME))
+                val location = getString(getColumnIndexOrThrow(DatabaseContract.FavoriteColumns.LOCATION))
+                val company = getString(getColumnIndexOrThrow(DatabaseContract.FavoriteColumns.COMPANY))
+                val repository = getString(getColumnIndexOrThrow(DatabaseContract.FavoriteColumns.REPOSITORY))
+                val followers = getString(getColumnIndexOrThrow(DatabaseContract.FavoriteColumns.FOLLOWERS))
+                val following = getString(getColumnIndexOrThrow(DatabaseContract.FavoriteColumns.FOLLOWING))
+                val favorite = getString(getColumnIndexOrThrow(DatabaseContract.FavoriteColumns.FAVORITE))
                 favoriteList.add(
-                        Favorite(
-                                id,
-                                username,
-                                name,
-                                avatar,
-                                company,
-                                favorite
+                        User(
+                            avatar,
+                            username,
+                            name,
+                            location,
+                            company,
+                            repository,
+                            followers,
+                            following,
+                            favorite
                         )
                 )
             }

@@ -9,11 +9,15 @@ object DatabaseContract {
     internal class FavoriteColumns : BaseColumns {
         companion object {
             const val TABLE_NAME = "favorite"
+            const val AVATAR = "avatar"
             const val USERNAME = "username"
             const val NAME = "name"
-            const val AVATAR = "avatar"
+            const val LOCATION = "location"
             const val COMPANY = "company"
-            const val FAVORITE = "isFav"
+            const val REPOSITORY = "repository"
+            const val FOLLOWERS = "followers"
+            const val FOLLOWING = "following"
+            const val FAVORITE = "isfavorite"
             val CONTENT_URI: Uri = Uri.Builder().scheme(SCHEME)
                     .authority(AUTHOR)
                     .appendPath(TABLE_NAME)

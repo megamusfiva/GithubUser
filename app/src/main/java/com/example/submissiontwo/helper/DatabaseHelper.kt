@@ -3,15 +3,8 @@ package com.example.submissiontwo.helper
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.provider.BaseColumns
-import android.provider.BaseColumns._ID
 import com.example.submissiontwo.Model.DatabaseContract
-import com.example.submissiontwo.Model.DatabaseContract.FavoriteColumns.Companion.AVATAR
-import com.example.submissiontwo.Model.DatabaseContract.FavoriteColumns.Companion.COMPANY
-import com.example.submissiontwo.Model.DatabaseContract.FavoriteColumns.Companion.FAVORITE
-import com.example.submissiontwo.Model.DatabaseContract.FavoriteColumns.Companion.NAME
 import com.example.submissiontwo.Model.DatabaseContract.FavoriteColumns.Companion.TABLE_NAME
-import com.example.submissiontwo.Model.DatabaseContract.FavoriteColumns.Companion.USERNAME
 
 internal class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
@@ -21,17 +14,20 @@ internal class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATA
 
         private const val DATABASE_VERSION = 1
 
-        private const val SQL_CREATE_TABLE_NOTE = "CREATE TABLE $TABLE_NAME" +
-                " ($_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " $USERNAME TEXT NOT NULL," +
-                " $NAME TEXT NOT NULL," +
-                " $AVATAR TEXT NOT NULL," +
-                " $COMPANY TEXT NOT NULL," +
-                " $FAVORITE TEXT NOT NULL)"
+        private const val SQL_CREATE_TABLE_FAV = "CREATE TABLE $TABLE_NAME" +
+                " ${DatabaseContract.FavoriteColumns.AVATAR} TEXT NOT NULL," +
+                " (${DatabaseContract.FavoriteColumns.USERNAME} TEXT PRIMARY KEY NOT NULL," +
+                " ${DatabaseContract.FavoriteColumns.NAME} TEXT NOT NULL," +
+                " ${DatabaseContract.FavoriteColumns.LOCATION} TEXT NOT NULL," +
+                " ${DatabaseContract.FavoriteColumns.COMPANY} TEXT NOT NULL," +
+                " ${DatabaseContract.FavoriteColumns.REPOSITORY} TEXT NOT NULL," +
+                " ${DatabaseContract.FavoriteColumns.FOLLOWERS} TEXT NOT NULL," +
+                " ${DatabaseContract.FavoriteColumns.FOLLOWING} TEXT NOT NULL," +
+                " ${DatabaseContract.FavoriteColumns.FAVORITE} TEXT NOT NULL)"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        db.execSQL(SQL_CREATE_TABLE_NOTE)
+        db.execSQL(SQL_CREATE_TABLE_FAV)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {

@@ -5,73 +5,86 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.UriMatcher
 import android.database.Cursor
+import android.media.tv.TvContract
 import android.media.tv.TvContract.AUTHORITY
 import android.net.Uri
+import com.example.submissiontwo.Model.DatabaseContract
 import com.example.submissiontwo.Model.DatabaseContract.FavoriteColumns.Companion.CONTENT_URI
 import com.example.submissiontwo.Model.DatabaseContract.FavoriteColumns.Companion.TABLE_NAME
 import com.example.submissiontwo.helper.FavoriteHelper
 
-class UserFavoriteProvider : ContentProvider() {
-
+class FavoriteProvider : ContentProvider() {
     companion object {
-        private const val USER_FAVORITE = 1
-        private const val USER_FAVORITE_ID = 2
+        private const val FAV = 1
+        private const val FAV_USERNAME = 2
+        private lateinit var favHelper: FavoriteHelper
         private val sUriMatcher = UriMatcher(UriMatcher.NO_MATCH)
-        private lateinit var favoriteHelper: FavoriteHelper
 
         init {
-            sUriMatcher.addURI(AUTHORITY, TABLE_NAME, USER_FAVORITE)
-            sUriMatcher.addURI(AUTHORITY, "$TABLE_NAME/#", USER_FAVORITE_ID)
+            sUriMatcher.addURI(AUTHORITY, TABLE_NAME, FAV)
+            sUriMatcher.addURI(AUTHORITY, "$TABLE_NAME/#", FAV_USERNAME)
         }
-    }
-
-    override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
-        val deleted: Int = when (USER_FAVORITE_ID) {
-            sUriMatcher.match(uri) -> favoriteHelper.deleteById(uri.lastPathSegment.toString())
-            else -> 0
-        }
-        context?.contentResolver?.notifyChange(CONTENT_URI, null)
-        return deleted
-    }
-
-    override fun getType(uri: Uri): String? = null
-
-    override fun insert(uri: Uri, values: ContentValues?): Uri? {
-        val added: Long = when (USER_FAVORITE) {
-            sUriMatcher.match(uri) -> favoriteHelper.insert(values)
-            else -> 0
-        }
-        context?.contentResolver?.notifyChange(CONTENT_URI, null)
-        return Uri.parse("$CONTENT_URI/$added")
     }
 
     override fun onCreate(): Boolean {
-        favoriteHelper = FavoriteHelper.getInstance(context as Context)
-        favoriteHelper.open()
+        favHelper = FavoriteHelper.getInstance(context as Context)
+        favHelper.open()
         return true
     }
 
     override fun query(
-            uri: Uri, projection: Array<String>?, selection: String?,
-            selectionArgs: Array<String>?, sortOrder: String?
+            uri: Uri,
+            strings: Array<String>?,
+            s: String?,
+            strings1: Array<String>?,
+            s1: String?
     ): Cursor? {
         return when (sUriMatcher.match(uri)) {
-            USER_FAVORITE -> favoriteHelper.queryAll()
-            USER_FAVORITE_ID -> favoriteHelper.queryById(uri.lastPathSegment.toString())
+            FAV -> favHelper.queryAll() // get all data
+            FAV_USERNAME -> favHelper.queryById(uri.lastPathSegment.toString()) // get data by id
             else -> null
         }
     }
 
-    override fun update(
-            uri: Uri, values: ContentValues?, selection: String?,
-            selectionArgs: Array<String>?
-    ): Int {
-        val updated: Int = when (USER_FAVORITE_ID) {
-            sUriMatcher.match(uri) -> favoriteHelper
-                    .update(uri.lastPathSegment.toString(), values)
+    override fun getType(uri: Uri): String? {
+        return null
+    }
+
+    override fun insert(uri: Uri, contentValues: ContentValues?): Uri? {
+        val added: Long = when (FAV) {
+            sUriMatcher.match(uri) -> favHelper.insert(contentValues)
             else -> 0
         }
+
+        context?.contentResolver?.notifyChange(CONTENT_URI, null)
+        return Uri.parse("$CONTENT_URI/$added")
+    }
+
+    override fun update(
+            uri: Uri,
+            contentValues: ContentValues?,
+            s: String?,
+            strings: Array<String>?
+    ): Int {
+        val updated: Int = when (FAV_USERNAME) {
+            sUriMatcher.match(uri) -> favHelper.update(
+                    uri.lastPathSegment.toString(),
+                    contentValues
+            )
+            else -> 0
+        }
+
         context?.contentResolver?.notifyChange(CONTENT_URI, null)
         return updated
+    }
+
+    override fun delete(uri: Uri, s: String?, strings: Array<String>?): Int {
+        val deleted: Int = when (FAV_USERNAME) {
+            sUriMatcher.match(uri) -> favHelper.deleteById(uri.lastPathSegment.toString())
+            else -> 0
+        }
+
+        context?.contentResolver?.notifyChange(CONTENT_URI, null)
+        return deleted
     }
 }

@@ -50,12 +50,12 @@ class FavoriteHelper(context: Context) {
                     null)
         }
 
-        fun queryById(username: String): Cursor {
+        fun queryById(id: String): Cursor {
             return database.query(
                     DATABASE_TABLE,
                     null,
                     "$USERNAME = ?",
-                    arrayOf(username),
+                    arrayOf(id),
                     null,
                     null,
                     null,
@@ -67,11 +67,11 @@ class FavoriteHelper(context: Context) {
         }
 
         fun update(id: String, values: ContentValues?): Int {
-            return database.update(DATABASE_TABLE, values, "$ID = ?", arrayOf(id))
+            return database.update(DATABASE_TABLE, values, "$USERNAME = ?", arrayOf(id))
         }
 
-        fun deleteById(username: String): Int {
-            return database.delete(DATABASE_TABLE, "$USERNAME = '$username'", null)
+        fun deleteById(id: String): Int {
+            return database.delete(DATABASE_TABLE, "$USERNAME = '$id'", null)
         }
     fun checkID(username: String): Boolean {
         val cursor = database.query(DATABASE_TABLE,

@@ -10,11 +10,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.submissiontwo.Adapter.FavoritAdapter
-import com.example.submissiontwo.Favorite
 import com.example.submissiontwo.Model.DatabaseContract.FavoriteColumns.Companion.CONTENT_URI
 import com.example.submissiontwo.Model.User
 import com.example.submissiontwo.R
 import com.example.submissiontwo.helper.MappingHelper
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_favorite.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -31,12 +32,16 @@ class FavoriteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite)
+        setSupportActionBar(tb_fav)
 
+        tb_fav.setNavigationOnClickListener {
+            val goHome = Intent(this@FavoriteActivity, MainActivity::class.java)
+            startActivity(goHome)
+            finish()
+        }
         rv_fav.layoutManager = LinearLayoutManager(this)
         rv_fav.setHasFixedSize(true)
-        adapter = FavoritAdapter(this)
         rv_fav.adapter = adapter
-
         val handlerThread = HandlerThread("DataObserver")
         handlerThread.start()
         val handler = Handler(handlerThread.looper)
@@ -45,32 +50,33 @@ class FavoriteActivity : AppCompatActivity() {
                 loadNotesAsync()
             }
         }
-        contentResolver.registerContentObserver (CONTENT_URI, true, myObserver)
+        contentResolver.registerContentObserver(CONTENT_URI, true, myObserver)
 
         if (savedInstanceState == null) {
             loadNotesAsync()
         } else {
-            val list = savedInstanceState.getParcelableArrayList<Favorite>(EXTRA_STATE)
+            val list = savedInstanceState.getParcelableArrayList<User>(EXTRA_STATE)
             if (list != null) {
                 adapter.listFavorite = list
             }
         }
     }
+
     // get data and set it to adapter from SQLite database
     private fun loadNotesAsync() {
         GlobalScope.launch(Dispatchers.Main) {
             pb_fav.visibility = View.VISIBLE
             val deferredNotes = async(Dispatchers.IO) {
-                val cursor = contentResolver?.query(CONTENT_URI, null, null, null, null)
+                val cursor = contentResolver.query(CONTENT_URI, null, null, null, null)
                 MappingHelper.mapCursorToArrayListFav(cursor)
             }
-            val favData = deferredNotes.await()
+            val favs = deferredNotes.await()
             pb_fav.visibility = View.INVISIBLE
-            if (favData.size > 0) {
-                adapter.listFavorite = favData
+            if (favs.size > 0) {
+                adapter.listFavorite = favs
             } else {
                 adapter.listFavorite = ArrayList()
-                showSnackbarMessage()
+                showSnackbarMessage("Tidak ada data saat ini")
             }
         }
     }
@@ -84,16 +90,17 @@ class FavoriteActivity : AppCompatActivity() {
         rv_fav.layoutManager = LinearLayoutManager(this)
         rv_fav.setHasFixedSize(true)
         rv_fav.adapter = adapter
-        adapter.setOnItemClickCallback(object : FavoritAdapter.OnItemClickCallBack {
-            override fun onItemClicked(data: Favorite) {
+        adapter.setOnItemClickCallback(object : FavoritAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: User) {
                 val intent = Intent(this@FavoriteActivity, DetailActivity::class.java)
-                intent.putExtra(DetailActivity.EXTRA_DATA, data)
+                intent.putExtra(DetailActivity.EXTRA_STATE, data)
                 startActivity(intent)
             }
         })
     }
-    private fun showSnackbarMessage() {
-        Toast.makeText(this, getString(R.string.emptyfav), Toast.LENGTH_SHORT).show()
+
+    private fun showSnackbarMessage(message: String) {
+        Snackbar.make(rv_fav, message, Snackbar.LENGTH_SHORT).show()
     }
 
     // run this func when open again for refresh data
