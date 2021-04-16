@@ -39,6 +39,7 @@ class FavoriteActivity : AppCompatActivity() {
             startActivity(goHome)
             finish()
         }
+        adapter = FavoritAdapter()
         rv_fav.layoutManager = LinearLayoutManager(this)
         rv_fav.setHasFixedSize(true)
         rv_fav.adapter = adapter

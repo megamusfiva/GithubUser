@@ -14,9 +14,9 @@ internal class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATA
 
         private const val DATABASE_VERSION = 1
 
-        private const val SQL_CREATE_TABLE_FAV = "CREATE TABLE $TABLE_NAME" +
-                " ${DatabaseContract.FavoriteColumns.AVATAR} TEXT NOT NULL," +
-                " (${DatabaseContract.FavoriteColumns.USERNAME} TEXT PRIMARY KEY NOT NULL," +
+        private const val SQL_CREATE_TABLE_NOTE = "CREATE TABLE $TABLE_NAME" +
+                " (${DatabaseContract.FavoriteColumns.AVATAR} TEXT NOT NULL," +
+                " ${DatabaseContract.FavoriteColumns.USERNAME} TEXT PRIMARY KEY NOT NULL," +
                 " ${DatabaseContract.FavoriteColumns.NAME} TEXT NOT NULL," +
                 " ${DatabaseContract.FavoriteColumns.LOCATION} TEXT NOT NULL," +
                 " ${DatabaseContract.FavoriteColumns.COMPANY} TEXT NOT NULL," +
@@ -27,7 +27,7 @@ internal class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATA
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        db.execSQL(SQL_CREATE_TABLE_FAV)
+        db.execSQL(SQL_CREATE_TABLE_NOTE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {

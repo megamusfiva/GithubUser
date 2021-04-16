@@ -69,13 +69,16 @@ class DetailActivity : AppCompatActivity() {
         val tabs: TabLayout = findViewById(R.id.tabs_detail)
         TabLayoutMediator(tabs, viewPager) { tab, position -> tab.text = resources.getString(TAB_TITLES[position]) }.attach()
 
-        setData()
         favoriteCheck()
+        setData()
+
         fab_favorite.setOnClickListener {
             if (isFavorite){
-                deleteFavoriteUser()}
+                deleteFavoriteUser()
+                favoriteCheck()}
             else {
                 insertFavoriteUser()
+                favoriteCheck()
             }
             isFavorite = !isFavorite
             setFavIcon()
@@ -122,7 +125,6 @@ class DetailActivity : AppCompatActivity() {
             put(FOLLOWING, user?.following)
             put(FAVORITE, user?.isfavorite)
         }
-        //isFavorite = true
         contentResolver?.insert(CONTENT_URI, values)
         Toast.makeText(this, getString(R.string.addfavorite), Toast.LENGTH_SHORT).show()
     }
@@ -138,6 +140,10 @@ class DetailActivity : AppCompatActivity() {
         } else {
             fab_favorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        favoriteHelper.close()
     }
 }
 

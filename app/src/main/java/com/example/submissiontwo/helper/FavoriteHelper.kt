@@ -5,7 +5,6 @@ import android.content.ContentValues.TAG
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.os.Build.ID
 import android.util.Log
 import com.example.submissiontwo.Model.DatabaseContract.FavoriteColumns.Companion.TABLE_NAME
 import com.example.submissiontwo.Model.DatabaseContract.FavoriteColumns.Companion.USERNAME
@@ -70,10 +69,10 @@ class FavoriteHelper(context: Context) {
             return database.update(DATABASE_TABLE, values, "$USERNAME = ?", arrayOf(id))
         }
 
-        fun deleteById(id: String): Int {
+        fun deleteById(id: String?): Int {
             return database.delete(DATABASE_TABLE, "$USERNAME = '$id'", null)
         }
-    fun checkID(username: String): Boolean {
+    fun checkID(username: String?): Boolean {
         val cursor = database.query(DATABASE_TABLE,
                 null, "$USERNAME = ?",
                 arrayOf(username),
