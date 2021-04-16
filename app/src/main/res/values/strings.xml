@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">GitHub User</string>
+    <string name="username">UserName</string>
+    <string name="name">Name</string>
+    <string name="url">Url</string>
+    <string name="search">Find</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="repository">Repository</string>
+    <string name="company">Company</string>
+    <string name="location">Location</string>
+    <string name="setting">Setting</string>
+    <string name="_1234">1234</string>
+    <string name="change_language">Change Language</string>
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="favorite">Favorite</string>
+    <string name="todo">TODO</string>
+    <string name="emptyfav">User Not Found</string>
+    <string name="unfavorite">Delete Favorite</string>
+    <string name="addfavorite">Add Favorite</string>
+    <string name="daily_message">Github User</string>
+    <string name="reminderOff">Reminder Disabled</string>
+    <string name="reminderOn">Reminder Enabled</string>
+</resources>

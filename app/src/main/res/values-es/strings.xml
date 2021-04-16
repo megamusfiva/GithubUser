@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Usuario de GitHub </string>
+    <string name="setting">Configuración</string>
+    <string name="username">Nombre de Usuario</string>
+    <string name="name">Nombre Completo</string>
+    <string name="repository">Repositorio</string>
+    <string name="following">Siguiendo</string>
+    <string name="followers">Mantenimiento</string>
+    <string name="location">Ciudad, estado</string>
+    <string name="company">Company Inc</string>
+    <string name="url">www.example.com</string>
+    <string name="search">Buscar usuario</string>
+    <string name="_1234">1234</string>
+    <string name="change_language">Change Language</string>
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="todo">TODO</string>
+</resources>

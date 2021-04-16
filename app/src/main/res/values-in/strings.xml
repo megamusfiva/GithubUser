@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GitHub User</string>
+    <string name="setting">Pengaturan</string>
+    <string name="username">Nama Pengguna</string>
+    <string name="name">Nama Lengkap</string>
+    <string name="repository">Repositori</string>
+    <string name="following">Mengikuti</string>
+    <string name="followers">Pengikut</string>
+    <string name="location">Town, Country</string>
+    <string name="company">Company Inc</string>
+    <string name="url">www.example.com</string>
+    <string name="search">Cari Pengguna</string>
+    <string name="_1234">1234</string>
+    <string name="change_language">Change Language</string>
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="todo">TODO</string>
+</resources>

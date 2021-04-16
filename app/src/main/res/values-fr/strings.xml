@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Utilisateur GitHub</string>
+    <string name="setting">paramètre</string>
+    <string name="username">Nom d Utilisateur</string>
+    <string name="name">Nom complet</string>
+    <string name="repository">Référentiel</string>
+    <string name="following">Suivant</string>
+    <string name="followers">Maintenance</string>
+    <string name="location">Ville, État</string>
+    <string name="company">Company Inc</string>
+    <string name="url">www.example.com</string>
+    <string name="search">Rechercher Un Utilisateur</string>
+    <string name="_1234">1234</string>
+    <string name="change_language">Change Language</string>
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="todo">TODO</string>
+</resources>
